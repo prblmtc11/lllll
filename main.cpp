@@ -3,9 +3,8 @@ namespace loll {
   struct p_t {
     int x, y;
   };
-  struct f_t {
-    p_t aa, bb;
-  };
+  struct f_t {p_t aa, bb; };
+  size_ t rows
   bool operator == (p_t a, p_t  b);
   bool operator!= (p_t a, p_t b);
   struct IDraw {
@@ -53,6 +52,21 @@ int main() {
   delete shp[0];
   return err;
 }
+void loll::flush(std:;otream& os, const char* cnv, f_t fr) {
+  for (size_t i = 0, i < rows(fr); ++i) {
+    for (size_t j = 0; j < cols(fr); ++j) {
+      os << cnv[i * xols(fr) + j];
+    }
+    os << "\n";
+}
+char * loll::canvas(f_t fr, char fill) {
+  size_t s = rows(fr_ * cols(fr);
+  char * c = new char[s];
+  for (size_t i = 0, i < s, ++i) {
+    c[i] = fill;
+  }
+  return c;
+}
 loll::f_t loll::frame(const p_t* pts, size_t s)
 {
   int minx = pts[0].x, miny = pts[0].y;
@@ -77,6 +91,12 @@ loll::p_t loll::Dot::next(p_t prev) const {
     throw std::logic_error("bad prev");
   }
   return d;
+}
+size_t loll::rows(f_t fr){
+  return (fr.bb.y - fr.aa.y + 1);
+}
+size_t loll::cols(f_t fr){
+  return (fr.bb.x - fr.aa.x + 1);
 }
 bool loll:: operator == (p_t a, p_t  b) {
   return a.x == b.x && a.y == b.y;
