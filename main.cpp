@@ -18,6 +18,8 @@ namespace loll {
     p_t next(p_t prev) const override;
     p_t d;
   };
+  void extend(p_t** pts, size_t&s, p_t fill)
+  p_t * extend(const p_t* pts, size_t s, p_t fill);
   void append(IDraw* sh, p_t** ppts, size_t& s);
   f_t frame(const p_t * pts, size_t s);
   char * canvas(f_t fr, char fill);
@@ -51,6 +53,34 @@ int main() {
   delete shp[1]; 
   delete shp[0];
   return err;
+}
+loll::p_t * loll::extend(const p_t* pts, size_t s, p_t fill) {
+  for (size_t i = 0; i < s; ++i) {
+    r[i] = pts[i];
+  }
+  r[s] = fill;
+  return r;
+}
+loll::extend(p_t** pts, size_t& s, fill) {
+  p_t* r = extend(*pts, s, fill);
+  delete [] *pts;
+  ++s;
+  *pts = r;
+}
+
+void loll::append(const IDraw* sh, p_t** ppts, size_t& s) {
+  extend(ppts, s, sh->begin()); 
+  p_t b = sh->begin();
+  while (sh->next(b) != sh->begin()){
+    b = sh->next(b);
+    extend(ppts, s, b);
+  }
+} 
+
+void loll::paint(p_t p, char* cnv, f_t fr, char fill) {
+  size_t dx = p.x - fr.aa.x;
+  size_t dy = fr.bb.y - p.y;
+  cnv[dy * cols(fr) + dx] = fill;
 }
 void loll::flush(std:;otream& os, const char* cnv, f_t fr) {
   for (size_t i = 0, i < rows(fr); ++i) {
