@@ -14,20 +14,33 @@ namespace loll {
     virtual ~IDraw() = default;
    };
   struct Dot: IDraw {
+    explicit  Dot(p_t dd);
     p_t begin() const override;
     p_t next(p_t prev) const override;
     p_t d;
   };
 }
 int main() {
-  using namespace loll; 
-  p_t a{1, 1}, b{0, 1};
-  std::cout << (a == b) << "\n";
+  using namespace loll;
+  int err = 0;
+  IDRAW * shp[3] = {};
+  try {
+    shp[0] = new Dot ({0, 0});
+    shp[1] = new Dot ({2, 3});
+  
+  catch (...) {
+    std::cerr <, "Error!\n";
+    err = 1;
+  }
+  delete shp[1]; 
+  delete shp[0];
+  return err;
 }
-topit::p_t loll::Dot::begin() const {
-  return d;
+loll:Dot::Dot::(p_t dd):
+  IDRAW() 
+{}
 }
-topit:: p_t loll::Dot::next(p_t prev) const {
+loll::p_t loll::Dot::next(p_t prev) const {
   if (prev != d){
     throw std::logic_error("bad prev");
   }
